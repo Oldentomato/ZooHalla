@@ -69,7 +69,6 @@ public class PlayerMng : MonoBehaviour
     }
 
     //맵 이동시 맵 스프라이트 알파값 조정
-    //맵 이동시 맵 스프라이트 알파값 조정
     public IEnumerator MoveMapAlphaCtrl(Collider2D GetTag)
     {
         if (GetTag.CompareTag("UpDoor") || GetTag.CompareTag("DownDoor") || GetTag.CompareTag("LeftDoor") || GetTag.CompareTag("RightDoor"))

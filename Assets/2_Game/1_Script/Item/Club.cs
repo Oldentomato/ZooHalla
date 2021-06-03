@@ -15,6 +15,16 @@ public class Club : Item
     //아이템 식별번호
     int num = 1;
 
+    private void Start()
+    {
+        direction = ItemOutInitial();
+    }
+
+    void Update()
+    {
+        ItemOut(direction);
+    }
+
     public string s_name
     {
         get

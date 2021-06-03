@@ -10,16 +10,19 @@ public class Inventory : MonoBehaviour
     public GameObject ItemIcon;
     [SerializeField]
     //20칸으로 늘릴 아이템이 있답니다 ㅎㅎ; 지금은 생각하지 맙시다
-    private const int InvenMax = 10;
+    private int InvenMax = 10;
     private int InvenNum = 0;
 
 
     public bool AddItem(Item GetItem)
     {
-        if(InvenNum < 10)
+        
+        if(InvenNum < InvenMax)
         {
             InvenItem.Add(GetItem);
-            Instantiate(ItemIcon, GetSlots[InvenNum]).GetComponent<Image>().sprite = InvenItem[InvenNum].S_Icon;
+            var ItemInfo = Instantiate(ItemIcon, GetSlots[InvenNum]);
+            ItemInfo.GetComponent<Image>().sprite = InvenItem[InvenNum].S_Icon;
+            ItemInfo.GetComponent<ItemBtn>().GetInfo(GetItem);
             InvenNum++;
             return true;
         }

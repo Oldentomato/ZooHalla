@@ -7,21 +7,20 @@ public class RoomInstance : MonoBehaviour
     [HideInInspector]
     public Vector2 gridPos;
     public int type; // 0: 보통맵, 1: 시작맵, 2:보스맵 3:이벤트맵
-    public int room_number;
     private static int height = 9;
     private static int width = 17;
     [HideInInspector]
     public bool doorTop, doorBot, doorLeft, doorRight;
     [SerializeField]
-    GameObject doorU, doorD, doorL, doorR, doorWall;
+    GameObject doorU, doorD, doorL, doorR, doorWall, doorWallColl;
     public TilemapRenderer GetMapTileRend;//최적화용
-    //public GameObject[] GetWalls;//최적화용 
+    public Transform GetWalls;//최적화용 
     private const float tileSize = 1;//타일 크기 건들지 말것
     static int mapsize = 2;
     Vector2 roomSizeInTiles = new Vector2(height * mapsize, width * mapsize);//9,17 가로세로 길이
     private Transform DoorInfoTrans;
 
-    public void Setup(Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight, int roomnum)
+    public void Setup(Vector2 _gridPos, int _type, bool _doorTop, bool _doorBot, bool _doorLeft, bool _doorRight)
     {
         gridPos = _gridPos;
         type = _type;
@@ -29,7 +28,6 @@ public class RoomInstance : MonoBehaviour
         doorBot = _doorBot;
         doorLeft = _doorLeft;
         doorRight = _doorRight;
-        room_number = roomnum;
         //MakeDoors();
         GenerateRoomTiles();
 
@@ -77,7 +75,7 @@ public class RoomInstance : MonoBehaviour
         }
         else
         {
-            Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = transform;
+            Instantiate(doorWallColl, spawnPos, Quaternion.identity).transform.parent = GetWalls;
         }
     }
 
@@ -95,7 +93,7 @@ public class RoomInstance : MonoBehaviour
             }
             else
             {
-                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = this.transform;
+                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = GetWalls;
             }
 
             spawnPos = positionFromTileGrid(x, 17);
@@ -105,7 +103,7 @@ public class RoomInstance : MonoBehaviour
             }
             else
             {
-                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = this.transform;
+                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = GetWalls;
             }
 
         }
@@ -118,7 +116,7 @@ public class RoomInstance : MonoBehaviour
             }
             else
             {
-                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = this.transform;
+                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = GetWalls;
             }
 
             spawnPos = positionFromTileGrid(33, y);
@@ -128,11 +126,11 @@ public class RoomInstance : MonoBehaviour
             }
             else
             {
-                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = this.transform;
+                Instantiate(doorWall, spawnPos, Quaternion.identity).transform.parent = GetWalls;
             }
 
         }
-
+        GetWalls.gameObject.SetActive(false);
     }
     //void GenerateTile(int x, int y)
     //{//픽셀 색깔에 맞게 타일이 생성되는 코드
@@ -174,6 +172,7 @@ public class RoomInstance : MonoBehaviour
         if (coll.gameObject.CompareTag("Player"))
         {
             GetMapTileRend.enabled = true;
+            GetWalls.gameObject.SetActive(true);
         }
     }
 
@@ -182,6 +181,7 @@ public class RoomInstance : MonoBehaviour
         if (coll.gameObject.CompareTag("Player"))
         {
             GetMapTileRend.enabled = false;
+            GetWalls.gameObject.SetActive(false);
         }
     }
 

@@ -299,7 +299,8 @@ public class Player : PlayerMng
         //플레이어 캐릭터 이동
         transform.Translate(GetMapPlayer.GetPlayerMove(col));
         //맵 알파값 조정
-        StartCoroutine(MoveMapAlphaCtrl(col));
+        //잠시끄는걸로 형이 계속 켜는걸로 하래
+        //StartCoroutine(MoveMapAlphaCtrl(col));
 
     }
 }

@@ -36,10 +36,12 @@ public class BtnMng : MonoBehaviour
         SGameMng.I.PlayerSc._bSkillOn = true;
     }
 
+
     public void InvenCtrl()
     {
         if (GetInvenGams.activeInHierarchy)
         {
+            
             GetInvenGams.SetActive(false);
         }
         else

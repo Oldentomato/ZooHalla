@@ -13,6 +13,17 @@ public class Tooth_Pick : Item
 
     [SerializeField]
     int num = 0;
+
+    private void Start()
+    {
+        direction = ItemOutInitial();
+    }
+
+    void Update()
+    {
+        ItemOut(direction);
+    }
+
     public string s_name
     {
         get
